@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <link rel="shortcut icon" href="/dokuauthv2assets/images/favicon.ico">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Login&nbsp;-&nbsp;DOKU Merchant</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/dokuauthv2assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/dokuauthv2assets/css/font-awesome.min.css" rel="stylesheet"><!-- for icon -->
+    <link href="/dokuauthv2assets/css/dokuframework.min.css" rel="stylesheet"><!-- framework -->
+    <!-- Custom CSS -->
+    <link href="/dokuauthv2assets/css/custom.css" rel="stylesheet">
+    <link href="/dokuauthv2assets/css/sweetalert.css" rel="stylesheet">
+    <link href="/dokuauthv2assets/css/stylesheets/main.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        #show-pwd {
+            position:absolute;
+            right:20px;
+            top:14px;
+            width:20px;
+            height:20px;
+            z-index:999;
+            cursor:pointer;
+            font-size:11px;
+            color:rgba(0,0,0,.5);
+            font-family:"dinreguler", Arial, Helvetica, sans-serif;
+            
+        }
+        .password-input {
+            padding-right:48px !important;
+        }
+
+        
+    </style>
+</head>
+            <script type="text/javascript">
+                var verifyCallback2 = function (response2) {
+                    document.getElementById("captcha2").value = response2;
+                };
+
+                var verifyCallback3 = function (response3) {
+                    document.getElementById("captcha3").value = response3;
+                };
+                var onloadCallback = function () {
+                    grecaptcha.render('gcaptcha2', {
+                        'sitekey': '6LdI8R4TAAAAAGLZOLU_UA6mt3Jh67sUZ0EJCdRn',
+                        'callback': verifyCallback2,
+                        'theme': 'light'
+                    });
+
+                    grecaptcha.render('gcaptcha3', {
+                        'sitekey': '6LdI8R4TAAAAAGLZOLU_UA6mt3Jh67sUZ0EJCdRn',
+                        'callback': verifyCallback3,
+                        'theme': 'light'
+                    });
+                };
+            </script>
+
+<body>
+    <section>
+        <div class="wrapper-login">
+            <div class="box-module wrapper-material" style="position:relative">
+                <section class="inner-page-wrapper">
+                    <div class="backdrop bg-login">
+                        <img class="corner-logo" src="/dokuauthv2assets/images/corner-logo.png" alt="">
+                        <!-- <div class="tagline">
+                            <h2 >Upscale your business<br>Reach out your customer</h2>
+                        </div> -->
+                    </div>
+                    <div class="main-form">
+                        <div class="logo-responsive">
+                            <img src="/dokuauthv2assets/images/logo-doku.png" alt="">
+                        </div>
+                        <h3 class="font-reg ">Sign In Account</h3>
+                        <form id="formLogin" action="/v2/signin" method="post" autocomplete="off">
+                            <br>
+                            <div class="form-group">
+                                <!-- <label for="basic-url">Login ID</label> -->
+                                <div class="input-group input-group-transparent">
+                                    <span class="input-group-addon" id="basic-addon1"><span class="fa fa-user"></span></span>
+                                    <input type="text" class="form-control" placeholder="Login ID" id="login" name="login" maxlength="254">
+                                </div>
+                            </div> 
+                            
+                            <div class="form-group">
+                                <!-- <label for="basic-url">Password</label> -->
+                                <div class="input-group input-group-transparent">
+                                    <span class="input-group-addon" id="basic-addon1"><span class="fa fa-lock"></span></span>
+                                    <input type="text" class="form-control password-input" placeholder="Password" id="realPassword" name="realPassword">
+                                    <input type="text" placeholder="" id="" name="" class="" style="display: none">
+                                    <input type="password" id="password" name="password" style="display: none" autocomplete="new-password">
+                                </div>
+                            </div> 
+
+                            <div class="clear"></div>
+                     
+                            <div class="wrapper-fp">
+                                <a href="" class="font-reg" data-toggle="modal" data-target="#forgotpassmodal">Forgot password?</a>
+                            </div>
+                            
+                            <input type="submit" class="btn-default" value="Sign In" id="btnSubmit"
+                                   onclick="javascript:grecaptcha.reset();"/>
+                            <input type="hidden" id="continues" name="continues"/>
+                            <input type="hidden" class="fingerprint" name="fingerprint"/>
+                            <input type="hidden" class="device" name="device"/>
+                            <div class="clear"></div>
+                        </form>
+                        <input type="hidden" id="error_msg" value=""/>
+                        <input type="hidden" id="activate_link" value=""/>
+                        <div class="additional-info">
+                            <p>
+                                Don't have account? <a href="https://merchant.doku.com/acc/register" class="font-reg">Sign up now</a>
+                            </p>
+                            <p>
+                                Not yet received activation link?
+                                <a href="#" class="font-reg" data-toggle="modal" class="font-reg" data-target="#modal-resent-act">Resend now</a>
+                            </p>
+                        </div>
+
+                        <a id="hrf_4times" href="#" data-toggle="modal" data-target="#modal-info-trial"
+                           style="display:hidden;"></a>
+                        <a id="hrf_lock" href="#" data-toggle="modal" data-target="#modal-locked-acc"
+                           style="display:hidden;"></a>
+                    </div>
+
+                </section>
+
+                
+            </div>
+            <footer>Copyright 2007-2019 DOKU&nbsp;&nbsp;|&nbsp;&nbsp;All Rights Reserved</footer>
+        </div>
+    </section>
+
+    <!-- modal dialog -->
+    <div class="modal fade" id="forgotpassmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog forpasswidth-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="left-tm modal-title font-reg" id="myModalLabel">Forgot Password</h4>
+                    <div class="clear"></div>
+                </div>
+                <form id="forgotpass" class="popupinput" action="/v2/api/forgot/do_request" method="post" autocomplete="off">
+                    <div class="modal-body">
+                        <div class="wrapper-material">
+                            <p>Enter your Login ID below, password reset link will be sent to your email.</p>
+                            <div class="form-group">
+                                <!-- <label for="basic-url">Login ID</label> -->
+                                <div class="input-group input-group-transparent">
+                                    <span class="input-group-addon" id="basic-addon1"><span class="fa fa-user"></span></span>
+                                    <input type="text" class="form-control" placeholder="Login ID" id="forgotemail" name="forgotemail" required maxlength="254">
+                                    <input type="hidden" class="fingerprint" name="fingerprint"/>
+                                    <input type="hidden" class="device" name="device"/>
+                                </div>
+                                <br>
+                                <div class="wrapper-code">
+                                    <div id="gcaptcha3"></div>
+                                    <input type="hidden" name="captcha3" id="captcha3"/>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="wrapper-button ">
+                            <div class="fright">
+                                <button type="submit" class="btn-default fright" id="btn-forgotpass">
+                                    SEND LINK
+                                </button>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- modal dialog -->
+
+    <!-- modal dialog -->
+    <div class="modal fade " id="modal-info-trial" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog alertattempt-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="left-tm modal-title font-reg" id="myModalLabel">Login Attempt</h4>
+                    <div class="clear"></div>
+                </div>
+                <div class="modal-body">
+                    <div class="content-module cm-popup"><!-- start content module -->
+                        <!--  <div class="alert alert-warning row" role="alert"> -->
+                        <div class="row">
+                            <img src="/dokuauthv2assets/images/login_attempt.png" alt="" class="img-loginacc-stat"/>
+                            <div class="col-xs-12">
+                                <center>
+                                    <h3 class="font-reg" style="color:#3a3a3a; margin-top:10px;">You only have one more
+                                        chance to login</h3>
+                                    <p>If you failed, your account will be <span class="font-reg">LOCKED</span></p>
+                                </center>
+                            </div>
+                        </div>
+                        <!--   </div> -->
+                        <div class="clear"></div>
+                        <div class="wrapper-button font-reg">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a href="" class="btn btn-default second-btn fullwidth" data-dismiss="modal"
+                                       aria-label="Close">I REMEMBER MY PASSWORD</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="button" id="forgot-show" class="btn btn-default fullwidth"
+                                           value="I FORGOT MY PASSWORD">
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal dialog -->
+
+    <!-- modal dialog -->
+    <div class="modal fade " id="modal-locked-acc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog lockedattempt-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="left-tm modal-title font-reg" id="myModalLabel">Account Locked</h4>
+                    <div class="clear"></div>
+                </div>
+                <div class="modal-body">
+                    <div class="content-module cm-popup"><!-- start content module -->
+                        <!--  <div class="alert alert-warning row" role="alert"> -->
+                        <div class="row">
+                            <img src="/dokuauthv2assets/images/login_locked.png" alt="" class="img-loginacc-stat"/>
+                            <div class="col-md-12">
+                                <center>
+                                    <h3 class="font-reg" style="color:#3a3a3a; margin-top:10px;">We are sorry, your
+                                        account is locked</h3>
+                                    <p>Please contact our customer service to unlock your account</p>
+                                </center>
+                            </div>
+                        </div>
+                        <!--   </div> -->
+                        <div class="clear"></div>
+                        <form class="popupinput">
+                            <div class="wrapper-button font-reg">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="contact-inline">
+
+                                            <h4><span class="fa fa-envelope"></span>&nbsp;&nbsp;support@doku.com</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="contact-inline">
+                                            <h4><span class="fa fa-phone"></span>&nbsp;&nbsp;(62-21) 5794-0604 Ext 321
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal dialog -->
+
+    <div class="modal fade " id="modal-resent-act" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog lockedattempt-dialog">
+            <div class="modal-content">
+                <form id="formResentActivation" action="/v2/api/reactivate" method="post"
+                      autocomplete="off">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="left-tm modal-title font-reg" id="myModalLabel">Resend Activation Link</h4>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="content-module cm-popup"><!-- start content module -->
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    
+                                    <p>Please provide your registered email, activation link will be sent immediately.</p>
+                                    <div class="wrapper-material">
+                                        <div class="">
+
+                                            
+                                            
+
+                                            <div class="form-group">
+                                                <!-- <label for="basic-url">Login ID</label> -->
+                                                <div class="input-group input-group-transparent">
+                                                    <span class="input-group-addon" id="basic-addon1"><span class="fa fa-envelope"></span></span>
+                                                    <input type="text" class="form-control" placeholder="Email" id="login2" name="login2" maxlength="254">
+                                                </div>
+                                            </div> 
+                                            <div class="wrapper-code">
+                                                <div id="gcaptcha2"></div>
+                                                <input type="hidden" name="captcha2" id="captcha2"/>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <input type="hidden" class="fingerprint" name="fingerprint"/>
+                            <input type="hidden" class="device" name="device"/>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="wrapper-button ">
+                            <div class="fright">
+                                    <button class="btn btn-default" onclick="javascript:grecaptcha.reset();" id="btnResent">RESEND ACTIVATION LINK
+                                    </button>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DIALOG LOADING -->
+    <div class="modal fade modal-preloader" id="loader-submit-global" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="content-module cm-popup">
+                        <div class="wrapper-preloader">
+                            <div class="preloader-loading"><svg class="spinner2" width="42px" height="42px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg></div>
+                            <h3 class="font-reg">Please wait</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=en"
+            async defer>
+    </script>
+<!-- jQuery Version 1.11.0 -->
+<script src="/dokuauthv2assets/js/jquery-3.4.1.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/dokuauthv2assets/js/bootstrap.min.js"></script>
+
+<!-- Jquery validate -->
+<script src="/dokuauthv2assets/js/jquery.validate.min.js"></script>
+
+<!-- Animation Login -->
+<script src="/dokuauthv2assets/js/login-loader.js"></script>
+<script src="/dokuauthv2assets/js/velocity.min.js"></script>
+
+<!--Notify Alert-->
+<script type="text/javascript" src="/dokuauthv2assets/js/jquery.notify.min.js"></script>
+
+<!--SweetAlert-->
+<script type="text/javascript" src="/dokuauthv2assets/js/sweetalert.min.js"></script>
+
+<!-- Input Register -->
+<script src="/dokuauthv2assets/js/jquery.material.form.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('.material-form').materialForm(); // Apply material
+    });
+</script>
+<script type="text/javascript">
+	function getParameterByName(name) {
+	    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+	        results = regex.exec(location.search);
+	    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+
+	function notifyAlert(message){
+		var text = $('.notify-text p').text();
+		if (text != message){
+	        notify({
+	            type: "info", //alert | success | error | warning | info
+	            title: "Alert",
+	            theme: "",
+	            position: {
+	                x: "right", //right | left | center
+	                y: "top" //top | bottom | center
+	            },
+	            icon: '<i class="fa fa-info"></i>',
+	            autoHide: true,
+	            message: htmlEntities(message)
+	        });
+	    }
+    }
+
+    function notifyMsg(message, type, title, icon){
+		var text = $('.notify-text p').text();
+		if (text != message){
+	        notify({
+	            type: type, //alert | success | error | warning | info
+	            title: title,
+	            theme: "",
+	            position: {
+	                x: "right", //right | left | center
+	                y: "top" //top | bottom | center
+	            },
+	            icon: '<i class="fa fa-' + icon + '"></i>', // alert | info | check | remove
+	            autoHide: true,
+	            message: htmlEntities(message)
+	        });
+	    }
+    }
+
+    function notifyActivate(url){
+        var text = $('.notify-text p').text();
+        if (text != url){
+            notify({
+                type: "alert", //alert | success | error | warning | info
+                title: "Alert",
+                theme: "dark-theme",
+                position: {
+                    x: "right", //right | left | center
+                    y: "top" //top | bottom | center
+                },
+                icon: '<i class="fa fa-info"></i>',
+                autoHide: false,
+                message: "Your user isn't activated yet, click <a target='_self' href='" + htmlEntities(url) + "'>here</a> , to send activated link"
+            });
+        }
+    }
+
+
+     $.validator.addMethod(
+        "regex",
+        function(value, element) {
+            //! "   #   $   %   &   '   (   )   *   +   ,   -   .   :   
+            //;   <   =   >   ?   @   [   \   ]   ^   _   `   {   |   }   ~
+
+            // var regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[#$@!%&*?]).{8,}$";
+            // var regexp = "(?=^.{8,30}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^*()_+}{:;'?.,])(?!.*\\s).*$";
+            var regexp = "(?=^.{8,30}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!=|\"@/#$%`^*<>\\]\\[()_\\-\\~\\&+}{:;'?.,])(?!.*\\s).*$";
+            var re = new RegExp(regexp);
+            return this.optional(element) || re.test(value);
+        },
+        "Please check your input. must have minimal 1 : letter, upperletter, number, special character"
+    );
+
+    function htmlEntities(str) {
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function getReFingerPrint(sendVar) {
+//        fingerprint(function (obj) {
+            $(sendVar).each(function (index) {
+                $(this).val(JSON.stringify(""));
+            });
+//        });
+    }
+
+    function sendAjaxRE(url) {
+        fingerprint(function (obj) {
+            dataFinger = JSON.stringify(obj);
+            $.ajax({
+                method: "POST",
+                url: url,
+                data: {dataFinger: dataFinger}
+            }).done(function (msg) {
+                console.log(msg);
+            });
+        });
+
+    }
+
+    function fingerprint(func) {
+        $.getScript("https://eds.doku.com/client.min.js", function () {
+            $.getScript("https://eds.doku.com/fingerprint2.min.js", function () {
+                var fp = new Fingerprint2();
+                var client = new ClientJS();
+                var obj = new Object();
+                fp.get(function (result, components)
+                {
+                    obj.fingerprint = client.getFingerprint() + "|" + result;
+                    obj.fonts = client.getFonts();
+                    obj.mimeTypes = client.getMimeTypes();
+                    obj.browser = client.getBrowser();
+                    obj.os = client.getOS();
+                    obj.osVersion = client.getOSVersion();
+                    obj.CPU = client.getCPU();
+                    obj.userAgentLowerCase = client.getUserAgentLowerCase();
+                    obj.screenPrint = client.getScreenPrint();
+                    obj.currentResolution = client.getCurrentResolution();
+                    obj.availableResolution = client.getAvailableResolution();
+                    obj.colorDepth = client.getColorDepth();
+                    obj.browserVersion = client.getBrowserVersion();
+                    obj.browserMajorVersion = client.getBrowserMajorVersion();
+                    obj.engine = client.getEngine();
+                    obj.engineVersion = client.getEngineVersion();
+                    obj.plugins = client.getPlugins();
+                    obj.device = client.getDevice();
+                    obj.deviceType = client.getDeviceType();
+                    obj.deviceVendor = client.getDeviceVendor();
+                    obj.timezone_offset = components[5].value;
+                    obj.session_storage = components[6].value;
+                    obj.local_storage = components[7].value;
+                    obj.indexed_db = components[8].value;
+                    obj.open_database = components[9].value;
+                    obj.cpu_class = components[10].value;
+                    obj.do_not_track = components[12].value;
+                    obj.adblock = components[16].value;
+                    obj.has_lied_languages = components[17].value;
+                    obj.has_lied_resolution = components[18].value;
+                    obj.has_lied_os = components[19].value;
+                    obj.has_lied_browser = components[20].value;
+                    obj.touch_support = components[21].value;
+                    obj.local_time = Date();
+                    obj.time_zone = new Date().toString().match(/\(([A-Za-z\s].*)\)/)[1];
+
+                    func(obj);
+                }
+                );
+            });
+        });
+    }
+</script>
+        <!--Custom Script-->
+        <script type="text/javascript">
+            var realPassword = [];
+            var realPass = "";
+            var tmpPass;
+            $(document).ready(function () {
+ 
+                if ($("#login").val().trim() != "") {
+                    $("#login").addClass("valid filled");
+                } else {
+                    $("#login").removeClass("valid filled");
+                }
+
+                if ($(".password-input").val().trim() != "") {
+                    $(".password-input").addClass("valid filled");
+                } else {
+                    $(".password-input").removeClass("valid filled");
+                }
+
+                $('#login').change(function () {
+                    if ($('#login').val().trim() != "") {
+                        $("#login").addClass("valid filled");
+                        $('#realPassword').focus();
+                    }
+                });
+
+                $('#realPassword').change(function () {
+                    if ($('#realPassword').val().trim() != "") {
+                        $("#realPassword").addClass("valid filled");
+                    }
+                });
+
+                //for resent form js
+                if ($("#login2").val().trim() != "") {
+                    $("#login2").addClass("valid filled");
+                } else {
+                    $("#login2").removeClass("valid filled");
+                }
+
+                // if ($("#password2").val().trim() != "") {
+                //     $("#password2").addClass("valid filled");
+                // } else {
+                //     $("#password2").removeClass("valid filled");
+                // }
+
+                $('#login2').change(function () {
+                    if ($('#login2').val().trim() != "") {
+                        $("#login2").addClass("valid filled");
+                    }
+                });
+
+                // $('#password2').change(function () {
+                //     if ($('#password2').val().trim() != "") {
+                //         $("#password2").addClass("valid filled");
+                //     }
+                // });
+                //end for resent form js
+                var WrapperInputError;
+                $("#forgotpass").validate({
+                    errorPlacement: function (error, element) {
+                        // Append error within linked label
+                        WrapperInputError = $(element).closest(".form-group");
+                        $(WrapperInputError).append(error);    
+                    },
+                    errorElement: "span",
+                    rules: {
+                        loginid: {
+                            required: true,
+                            maxlength: 254
+                        }
+                    },
+                    submitHandler: function (form) {
+                        if ($(form).valid()) {
+
+                            var form = $('#forgotpass');
+                            $.ajax({
+                                url: form.attr('action'),
+                                type: 'POST',
+                                data: form.serialize(),
+                                beforeSend: function(){
+                                    $("#btn-forgotpass").html("<div class='loading-button'><i class='fa fa-circle-o-notch fa-spin fa-3x fa-fw'></i></div>");
+                                    $("#btn-forgotpass").prop("disabled", "true");
+                                },
+                                success: function (data) {
+                                    var obj = jQuery.parseJSON(data);
+                                    $("#btn-forgotpass").html("RESET PASSWORD");
+                                    $("#btn-forgotpass").prop("disabled", "false");
+                                    if (obj.code == "000" && obj.message == "ok") {
+                                        $('#forgotpassmodal').css('display', 'none');
+                                        $('#forgotpassmodal .close').click();
+                                        notifyMsg("Your password is reset!, please check your inbox or spam folder.", "success", "Reset Password", "check");
+                                        setTimeout(function(){
+                                            window.location.href = "https://bo.doku.com/v2?continue=https://merchant.doku.com/acc/";
+                                        },3000);
+                                        
+                                    
+                                    }
+                                    
+                                },
+                                error: function (xhr, status, error) {
+                                    var obj = jQuery.parseJSON(xhr.responseText);
+                                    notifyMsg(obj.message, "error", "Failed to Reset Password", "remove");
+                                    setTimeout(function(){
+                                        window.location.href = "https://bo.doku.com/v2?continue=https://merchant.doku.com/acc/";
+                                    },2000);
+                                        
+                                 
+                                        
+                                  
+                                }
+                            });
+                            return false;
+                        }
+                    }
+                });
+                var WrapperInputError;
+                // validate signup form on keyup and submit
+                $("#formLogin").validate({
+                    errorPlacement: function (error, element) {
+                        // Append error within linked label
+                        WrapperInputError = $(element).closest(".form-group");
+                        $(WrapperInputError).append(error);   
+                    },
+                    errorElement: "span",
+                    rules: {
+                        login: {
+                            required: true,
+                            maxlength: 254
+                            //,isUser: true
+                        },
+                        realPassword: {
+                            required: true
+                            , minlength: 8
+                            //,regex: true
+                        }
+                    },
+                    messages: {
+                        inputuser: {
+                            isUser: "Email / User Name not found"
+                        }
+                    },
+                    submitHandler: function (form) {
+                        if ($(form).valid()) {
+                            var form = $('#formLogin');
+                            var retry = localStorage.getItem("retry");
+
+                            $("#password").val(realPass);
+                            $.ajax({
+                                url: form.attr('action'),
+                                type: 'POST',
+                                data: form.serialize(),
+                                beforeSend: function () {
+                                    $("#loader-submit-global").modal("show");
+                                },
+                                success: function (data) {
+
+                                    setTimeout(function(){$("#loader-submit-global").modal("hide");},800);
+
+                                    var obj = jQuery.parseJSON(data);
+
+                                    if (obj.code == "000" && obj.url != null) {
+                                        if (obj.mode == "!activate") {
+
+                                            swal({
+                                                title: "Activate",
+                                                text: "You have not activated your account Click OK button to send activated link",
+                                                type: "warning",
+                                                showCancelButton: true,
+                                                confirmButtonColor: "#e7a51f",
+                                                confirmButtonText: "Ok"
+                                            }, function () {
+                                                window.location.href = obj.url;
+                                            });
+                                        } else {
+                                            setTimeout(function(){window.location.href = obj.url},1000);
+                                        }
+                                    }
+                                },
+                                error: function (xhr, status, error) {
+
+                                    $("#loader-submit-global").modal("hide");
+
+                                    var obj = jQuery.parseJSON(xhr.responseText);
+
+                                    if (obj.code != null) {
+                                        if (obj.code == "202") {
+                                            if (obj.url != null && obj.url != "") {
+                                                window.location.href = obj.url;
+                                            }
+                                            if (obj.retry != null && obj.retry != "") {
+                                                localStorage.setItem("retry", obj.retry);
+                                            }
+                                            if (obj.message == "Username / email not found") {
+                                                notifyMsg(obj.message, "warning", "Login Failed", "exclamation");
+                                            }
+                                        } else if (obj.code == "400" && obj.message == "Failed /  Wrong Captcha Inputed") {
+                                            location.reload();
+                                        } else if (obj.code == "500") {
+                                            if (obj.lock == "true") {
+                                                $("#hrf_lock").click(); //show modal dialog
+                                            } else {
+                                                location.reload();
+                                            }
+                                        }
+                                        if (obj.code == "202" && obj.message == "Password not match last try") {
+                                            $('#hrf_4times').click(); //show modal dialog
+                                        }
+                                        if (obj.lock != "true") {
+                                            notifyAlert(obj.message); //kalau setelah login > 5 kali
+                                        }
+                                    }
+                                }
+                            });
+                            return false;
+                        }
+                    }
+                });
+
+                //Added 30 Nov for resend activation link
+                $('#formResentActivation').validate({
+                    errorPlacement: function (error, element) {
+                        // Append error within linked label
+                        WrapperInputError = $(element).closest(".form-group");
+                        $(WrapperInputError).append(error); 
+                    },
+                    errorElement: "span",
+                    rules: {
+                        login2: {
+                            required: true
+                        },
+                        // password2: {
+                        //     required: true
+                        //     , minlength: 8
+                        // }
+                    },
+                    submitHandler: function (form) {
+                        var form = $('#formResentActivation');
+                        $.ajax({
+                            url: form.attr('action'),
+                            type: 'POST',
+                            data: form.serialize(),
+                            beforeSend: function () {
+                                $("#btnResent").html('<span class="fa fa-spinner"></span>');
+                                $("#btnResent").prop("disabled", true);
+                            },
+                            success: function (data) {
+                                var obj = jQuery.parseJSON(data);
+                                if (obj.code == "000") {
+                                    notifyAlert(obj.message);
+                                    $('#modal-resent-act').modal('toggle');
+                                }
+                                $("#btnResent").text("RESEND ACTIVATION LINK");
+                                $("#btnResent").prop("disabled", false);
+                            },
+                            error: function (xhr, status, error) {
+                                try {
+                                    var obj = jQuery.parseJSON(xhr.responseText);
+                                    if (obj.code != null) {
+                                        if (obj.code == "400" && obj.message == "Failed /  Wrong Captcha Inputed") {
+                                            notifyMsg(obj.message, "error", "Failed", "remove");
+                                        } else if (obj.code == "500") {
+                                            if (obj.lock == "true") {
+                                                $('#modal-resent-act').modal('toggle');
+                                                $("#hrf_lock").click();
+                                            } else {
+                                                location.reload();
+                                            }
+                                        }
+                                        if (obj.lock != "true") {
+                                            notifyMsg(obj.message, "warning", "Failed", "exclamation");
+                                        }
+                                    }
+                                } catch (ex) {
+                                    location.reload();
+                                }
+                            }
+                        });
+                        return false;
+                    }
+                });
+
+                //End
+
+                var error_msg = getParameterByName("error_msg");
+
+                if (error_msg != null && error_msg != '') {
+                    if (error_msg.indexOf("Your link is expired") >= 0) {
+                        //kalau expired lebih dari 30 menit
+                        notifyMsg(error_msg, "warning", "Failed", "remove");
+                        $("#btnSubmit").prop('disabled', true);
+                        setTimeout(
+                            function () {
+                                window.location.href = "https://bo.doku.com/v2?continue=https://merchant.doku.com/acc/";
+                            }, 3000);
+                    }
+                    else if (error_msg.indexOf("Your user already confirm") >= 0) {
+                        //kalau udah A  tapi diklik lagi
+                        notifyMsg(error_msg, "info", "Failed", "info");
+                        $("#btnSubmit").prop('disabled', true);
+                        setTimeout(
+                            function () {
+                                window.location.href = "https://bo.doku.com/v2?continue=https://merchant.doku.com/acc/";
+                            }, 3000);
+                    }
+                    else if (error_msg.indexOf("Session invalid") >= 0) {
+                        //kalau session nya hilang
+                        notifyMsg(error_msg, "warning", "Failed", "exclamation");
+                        $("#btnSubmit").prop('disabled', true);
+                        setTimeout(
+                            function () {
+                                window.location.href = "https://bo.doku.com/v2?continue=https://merchant.doku.com/acc/";
+                            }, 2000);
+                        }
+                    else if (error_msg.indexOf("Request parameter is null") >= 0 || error_msg.indexOf("continue=null") >= 0) {
+                        $("#btnSubmit").prop('disabled', true); 
+                        setTimeout(
+                            function () {
+                                window.location.href = "https://bo.doku.com/v2?continue=https://merchant.doku.com/acc/";
+                            }, 100);
+                    } else {
+                        //error apapun selain diatas masuk sini
+                        notifyMsg(error_msg, "warning", "Warning", "exclamation");
+                        $("#btnSubmit").prop('disabled', true);
+                        setTimeout(
+                            function () {
+                                window.location.href = "https://bo.doku.com/v2?continue=https://merchant.doku.com/acc/";
+                            }, 2000);
+                    }
+                }
+
+                var continues = getParameterByName("continue");
+                if (continues != 'null' && continues != '') {
+                    $('#continues').val(continues);
+                    $('.regtext a').attr("href", continues + "register");
+                } else if (continues == 'null') {
+                    $('.regtext a').attr("href", "https://merchant.doku.com/acc/register");
+                } else {
+                    $('.regtext a').attr("href", "https://merchant.doku.com/acc/register");
+                }
+
+                $("#forgot-show").click(function () {
+                    $('#modal-info-trial').modal('hide');
+                    setTimeout(function () {
+                        $('#forgotpassmodal').modal('show')
+                    }, 500);
+                });
+
+                getReFingerPrint('.fingerprint');
+                
+                var isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
+                if (isMobile) {
+                    $('.device').each(function (index) {
+                        $(this).val('MOBILE');
+                    });
+                } else {
+                    $('.device').each(function (index) {
+                        $(this).val('PC');
+                    });
+                }
+            });
+
+
+            $(function (){
+                // MASKING PASSWORD
+                $(".password-input").parent().append('<div id="show-pwd">SHOW</div>');
+                $(".password-input").each(function (index, input) {
+                    var $input = $(input);
+                    $("#show-pwd").click(function () {
+                    var change = "";
+                    var aa = 'SHOW';
+                    var bb = 'HIDE';
+                    if ($(this).html() === aa) {
+                        $(this).html(bb)
+                        $("#realPassword").val(realPass);
+                      } else {
+                        $(this).html(aa);
+                        $("#realPassword").val(tmpPass);
+                      }
+                    })
+                }); 
+            });
+
+            $("#realPassword").keyup(function(event) {
+                var tmpPassword = $(this).val();
+                var passwordLen = tmpPassword.length;
+                var dot = "\u2022";
+
+                // Get current keyup character position.
+                var currKeyupPos = this.selectionStart;
+
+                for (var i = 0; i < passwordLen; i++) {
+                    if (tmpPassword[i] != dot) {
+                        if(tmpPassword[i+1] == dot){
+                            realPassword.splice(i, 0, tmpPassword[i]);
+                        } else {
+                            realPassword[i] = tmpPassword[i];
+                        }
+                    }
+                }
+
+                if (passwordLen < realPassword.length) {
+                    var diff = realPassword.length - passwordLen;
+
+                    var key = event.keyCode || event.charCode;
+
+                    // Check if last keypress was backspace or delete
+                    if (key == 8 || key == 46) {
+                        realPassword.splice(currKeyupPos, diff);
+                    }
+                    // User highlighted and overwrote a portion of the password
+                    else {
+                        realPassword.splice(currKeyupPos - 1, diff + 1);
+                        realPassword.splice(currKeyupPos - 1, 0, tmpPassword[currKeyupPos - 1]);
+                    }
+                }
+                
+                realPass="";
+                for(var i=0; i<realPassword.length; i++){
+                    realPass = realPass + realPassword[i];
+                }
+                tmpPass = tmpPassword.replace(/./g, dot)
+                if($("#show-pwd").html()=="SHOW"){
+                    $(this).val(tmpPass);
+                    tmpPass = $(this).val();
+                }
+            });
+        </script>
+</body>
+</html>
+
